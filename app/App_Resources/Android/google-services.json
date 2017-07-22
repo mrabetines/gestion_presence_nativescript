@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "699761899467",
+    "firebase_url": "https://gestionpresence-530eb.firebaseio.com",
+    "project_id": "gestionpresence-530eb",
+    "storage_bucket": "gestionpresence-530eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699761899467:android:4cda53a22b15f795",
+        "android_client_info": {
+          "package_name": "com.gestionpresence"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699761899467-dn9lt8i0acs502dmaoibhfbbrumsh5b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxFXNDkn0v_irY5b37YRTQeUbhxwfjcoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699761899467:android:d23d4b44ff09a333",
+        "android_client_info": {
+          "package_name": "org.nativescript.GestionPresence"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699761899467-dn9lt8i0acs502dmaoibhfbbrumsh5b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxFXNDkn0v_irY5b37YRTQeUbhxwfjcoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
