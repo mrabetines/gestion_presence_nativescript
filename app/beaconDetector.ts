@@ -1,6 +1,8 @@
 import {Observable} from 'data/observable';
 import {BeaconRegion, Beacon, BeaconCallback,BeaconLocationOptions, BeaconLocationOptionsIOSAuthType, BeaconLocationOptionsAndroidAuthType} from "nativescript-ibeacon/nativescript-ibeacon.common";
 import {NativescriptIbeacon} from "nativescript-ibeacon";
+import { PresenceService } from "./shared/services/presence.service";
+ 
 
 export class BeaconDetector extends Observable implements BeaconCallback {
 
@@ -8,11 +10,15 @@ export class BeaconDetector extends Observable implements BeaconCallback {
 
     public mytext: string ;
 
-    private region: BeaconRegion = null;
+    private regions: Array<BeaconRegion> = [] ;
 
-    constructor() {
+    presenceService:PresenceService;
+
+    token:string;
+
+    constructor(presenceService: PresenceService) {
         super();
-
+        this.presenceService=presenceService;
         console.log('Constructor of BeaconDetector');
         this.mytext="let's try our beacons";
         let options: BeaconLocationOptions = {
@@ -21,8 +27,22 @@ export class BeaconDetector extends Observable implements BeaconCallback {
             androidAuthorisationDescription: "Location permission needed"
         };
         this.nativescriptIbeacon = new NativescriptIbeacon(this, options);
-        this.region = new BeaconRegion("HelloID", "B9407F30-F5F8-466E-AFF9-25556B57FE6D");
-         
+        //let self=this;
+        this.presenceService.getListBeacons().subscribe(beaconsList=>{
+            //console.log(JSON.stringify(beaconsList.json()));
+            beaconsList.forEach(item => {
+            console.log("constructor"+item.id_beacon); 
+            this.regions.push(new BeaconRegion(item.id_beacon.toString(),item.beacon.proximityUUID,item.beacon.major,item.beacon.minor));
+            
+        })
+            this.start();
+        });
+     
+    }
+
+    setToken(token:string)
+    {
+        this.token=token;
     }
 
     start() {
@@ -46,13 +66,20 @@ export class BeaconDetector extends Observable implements BeaconCallback {
 
     stop() {
         this.mytext = "Stopping .....";
-        this.nativescriptIbeacon.stopMonitoring(this.region);
+        this.regions.forEach(region => {
+        this.nativescriptIbeacon.stopMonitoring(region);    
+        });
+        
         this.nativescriptIbeacon.unbind();
     }
 
     onBeaconManagerReady(): void {
         console.log("onBeaconManagerReady");
-        this.nativescriptIbeacon.startMonitoring(this.region);
+        //let self=this;
+        this.regions.forEach(region => {
+        this.nativescriptIbeacon.startMonitoring(region); 
+        console.log("onBeaconManagerReady"+ region.identifier); 
+        }); 
     }
 
     didRangeBeaconsInRegion(region: BeaconRegion, beacons: Beacon[]): void {
@@ -64,8 +91,9 @@ export class BeaconDetector extends Observable implements BeaconCallback {
     }
 
     didEnterRegion(region: BeaconRegion) {
-        this.mytext="i have detected a beacon youpiiiiiiiiiii";
+        //this.mytext="i have detected a beacon youpiiiiiiiiiii";
         console.log('Did enter Region ' + region.identifier);
+        this.presenceService.getData(this.token).subscribe(message=>{console.log(message);});
     }
 
     didExitRegion(region: BeaconRegion) {
