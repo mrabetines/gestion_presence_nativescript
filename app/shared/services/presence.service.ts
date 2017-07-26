@@ -30,10 +30,6 @@ export class PresenceService {
         console.log(token);
         return this.http.post(this.apiUrl+"getdata",JSON.stringify({'token':token}))
         .map(res => res.json())
-        .map(data => {
-            console.log(JSON.stringify(data) );
-            return data.result;
-        })
         .catch(this.handleErrors);  
     }
     markPresence(token:string,cin:string,mdp:string,id_Beacon:number)

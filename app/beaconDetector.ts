@@ -93,7 +93,7 @@ export class BeaconDetector extends Observable implements BeaconCallback {
     didEnterRegion(region: BeaconRegion) {
         //this.mytext="i have detected a beacon youpiiiiiiiiiii";
         console.log('Did enter Region ' + region.identifier);
-        this.presenceService.getData(this.token).subscribe(message=>{console.log(message);});
+        this.presenceService.getData(this.token).subscribe();
     }
 
     didExitRegion(region: BeaconRegion) {
