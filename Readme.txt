@@ -1,7 +1,7 @@
 Ce que j'ai fait pour le moment :
 *détection du beacon
 *configuration du push notif (android)
-Qlq remarques:
-*Dans le projet j'ai utilisé la template helloworld donc il y a qlq classes inutiles pour le moment (ex:item)
+*consommation du service qui me donne la liste des beacons
+
 Taches suivantes:
-*commencer à développer le backend
+*consommer les 2 autres services
