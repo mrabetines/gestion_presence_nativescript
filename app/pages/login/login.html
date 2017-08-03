@@ -1,0 +1,11 @@
+<StackLayout>
+  
+  <TextField #field1 hint="email" keyboardType="email" 
+  autocorrect="false" autocapitalizationType="none" [(ngModel)]="email"></TextField>
+  <TextField  #field2 hint="password" secure="true"  [(ngModel)]="pwd" ></TextField>
+
+  <Button text='login' class="submit-button" (tap)="submit()"></Button>
+  <Image src="res://my_logo" stretch="none" horizontalAlignment="center"> </Image>
+
+  <ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'"  horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+</StackLayout>

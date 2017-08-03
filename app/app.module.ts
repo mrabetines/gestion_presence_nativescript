@@ -1,12 +1,17 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
-import { AppRoutingModule } from "./app.routing";
-import { AppComponent } from "./app.component";
-import { PresenceService } from "./shared/services/presence.service";
-import { ModalDialogService } from "nativescript-angular/modal-dialog";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { LoginModalComponent } from "./login_modal/login.modal";
+import { AppRoutingModule} from "./app.routing";
+import { AppComponent } from "./app.component";
+import {LoginComponent} from "./pages/login/login.component";
+import {HomeComponent} from "./pages/home/home.component";
+import { StudentService } from "./shared/student/student.service";
+import { BeaconService } from "./shared/beacon/beacon.service";
+import { PresenceService } from "./shared/presence/presence.service";
+import {LoginActivate} from "./shared/security/login.guard";
+
+ 
 
 @NgModule({
     bootstrap: [
@@ -20,12 +25,15 @@ import { LoginModalComponent } from "./login_modal/login.modal";
     ],
     declarations: [
         AppComponent,
-        LoginModalComponent
+        LoginComponent,
+        HomeComponent
+         
     ],
-    entryComponents: [LoginModalComponent],
     providers: [
         PresenceService,
-        ModalDialogService
+        StudentService,
+        LoginActivate,
+        BeaconService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

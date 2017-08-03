@@ -9,9 +9,13 @@ In many cases you may want to use the NativeScript core theme instead
 of writing your own CSS rules. For a full list of class names in the theme
 refer to http://docs.nativescript.org/ui/theme.
 */
-@import 'nativescript-theme-core/css/core.light.css';
-Label {
-  background-color:aliceblue;
-  font-size: 30;
 
+Page {
+  background-color: white;
+  font-size: 15;
 }
+
+/*TextField {
+  padding: 10;
+  font-size: 13;
+}*/
