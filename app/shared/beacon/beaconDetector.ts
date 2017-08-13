@@ -17,11 +17,14 @@ export class BeaconDetector extends Observable implements BeaconCallback {
     presenceService: PresenceService;
 
     private id_region: number;
-
-    constructor(beaconService: BeaconService, presenceService: PresenceService) {
+     
+    constructor(beaconService: BeaconService,presenceService: PresenceService) {
         super();
-        this.beaconService = beaconService;
-        this.presenceService = presenceService;
+        this.beaconService=beaconService;
+        this.presenceService=presenceService;
+        
+       /* this.beaconService = AppInjector.get(BeaconService);
+        this.presenceService = AppInjector.get(PresenceService);*/
         console.log('Constructor of BeaconDetector');
         let options: BeaconLocationOptions = {
             iOSAuthorisationType: BeaconLocationOptionsIOSAuthType.Always,
@@ -33,8 +36,7 @@ export class BeaconDetector extends Observable implements BeaconCallback {
             beaconsList.forEach(item => {
                 console.log("constructor" + item.id_beacon);
                 this.regions.push(new BeaconRegion(item.id_beacon.toString(), item.beacon.proximityUUID, item.beacon.major, item.beacon.minor));
-
-            })
+             })
             this.start();
         });
 
@@ -90,7 +92,8 @@ export class BeaconDetector extends Observable implements BeaconCallback {
         console.log('Did enter Region ' + region.identifier);
         this.presenceService.markPresence(parseInt(region.identifier),getNumber("id", 0),).subscribe(
             () => { console.log("marked present") },
-            (error) => { alert("error has occured"); }
+            (error) => { //alert("error has occured");
+                          console.log("ERROR: "); }
         )
     }
 

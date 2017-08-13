@@ -2,11 +2,11 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { StudentService } from "../../shared/student/student.service";
 import { Page} from "ui/page";
 import { RouterExtensions } from "nativescript-angular/router";
-import * as PushNotifications from "nativescript-push-notifications";
 import * as dialogs from "ui/dialogs";
 import { TextField } from "ui/text-field";
 import { setNumber,setString} from "application-settings";
 import {Config} from "../../shared/config";
+import { Token } from "../../app.component";
 var validator = require("email-validator");
 
 @Component({
@@ -32,60 +32,7 @@ export class LoginComponent implements OnInit {
     constructor(private nav: RouterExtensions, private studentservice: StudentService, private page: Page) {
         this.email = "";
         this.pwd = "";
-        //settings for the push notification 
-        let settings = {
-            //for android
-            senderID: Config.senderID,
-            //for ios
-            badge: true,
-            sound: true,
-            alert: true,
-            interactiveSettings: {
-                actions: [{
-                    identifier: 'READ_IDENTIFIER',
-                    title: 'Read',
-                    activationMode: "foreground",
-                    destructive: false,
-                    authenticationRequired: true
-                }, {
-                    identifier: 'CANCEL_IDENTIFIER',
-                    title: 'Cancel',
-                    activationMode: "foreground",
-                    destructive: true,
-                    authenticationRequired: true
-                }],
-                categories: [{
-                    identifier: 'READ_CATEGORY',
-                    actionsForDefaultContext: ['READ_IDENTIFIER', 'CANCEL_IDENTIFIER'],
-                    actionsForMinimalContext: ['READ_IDENTIFIER', 'CANCEL_IDENTIFIER']
-                }]
-            },
-            notificationCallbackIOS: data => {
-                console.log("DATA: " + JSON.stringify(data));
-            },
-            notificationCallbackAndroid: (message, data, notification) => {
-                console.log("MESSAGE: " + JSON.stringify(message));
-                console.log("DATA: " + JSON.stringify(data));
-                console.log("NOTIFICATION: " + JSON.stringify(notification));
-                /*dialogs.alert({
-                    message: message,
-                    okButtonText: "OK"
-                }).then(() => {
-                    console.log("Dialog closed!");
-                });*/
-                alert(message);
-                 
-            }
-        };
-        //register for push notif 
-        PushNotifications.register(settings, data => {
-            console.log("REGISTRATION ID: " + JSON.stringify(data));
-            //console.log(data);
-            this.token = data;
-            PushNotifications.onMessageReceived(settings.notificationCallbackAndroid);
-        }, error => {
-            console.log(error);
-        });
+        
     }
 
 
@@ -101,13 +48,14 @@ export class LoginComponent implements OnInit {
             this.isLoading = false;
             return;
         }
-        this.studentservice.login(this.email, this.pwd, this.token).subscribe(
+        this.studentservice.login(this.email, this.pwd, Token).subscribe(
             (data) => {
                  this.isLoading = false;
                  if(data.result instanceof Array)
                  {
                     setNumber("id", data.result[0]);
                     setString("qr_code", data.result[1]);
+                    setString("token", data.result[2]);
                     console.log("logged in");
                     this.nav.navigate(["/"], { clearHistory: true });
                  }

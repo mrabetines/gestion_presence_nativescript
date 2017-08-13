@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -42,4 +42,7 @@ import {LoginActivate} from "./shared/security/login.guard";
 /*
 Pass your application module to the bootstrapModule function located in main.ts to start your app
 */
-export class AppModule { }
+ 
+export class AppModule { 
+}
+ 

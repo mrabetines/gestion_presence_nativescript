@@ -6,21 +6,19 @@ import {clear} from "application-settings";
 import { RouterExtensions } from "nativescript-angular/router";
 import { getString } from "application-settings";
 import { Image } from "ui/image";
+const utils = require("utils/utils");
 var ZXing = require('nativescript-zxing');
-
 @Component({
     selector: "my-home",
     templateUrl: "pages/home/home.html",
     styleUrls: ["pages/home/home.css", "pages/home/home-common.css"]
 })
-export class HomeComponent {
-    //some attributes
-    public myBeaconDetector: BeaconDetector;
+export class HomeComponent implements OnInit {
     @ViewChild("image") image: ElementRef;
 
-    //the constructor
-    constructor(private beaconService: BeaconService,private presenceService: PresenceService,private nav: RouterExtensions) {
-    }
+    
+    constructor(private nav: RouterExtensions) {}
+
     getQRCode(){
     let qr_code =getString("qr_code", "none");
     if(qr_code =="none")
@@ -34,6 +32,7 @@ export class HomeComponent {
     myimage.src=img;                                                                                                                                                                               
     }
     }
+
     logout() {
         console.log("logout action item tapped.");
         clear();
@@ -42,13 +41,11 @@ export class HomeComponent {
 
     }
     ngOnInit(): void {
-        console.log("ngOnInit");
-        this.myBeaconDetector = new BeaconDetector(this.beaconService,this.presenceService);
+    var context = utils.ad.getApplicationContext();
+    var intent = new android.content.Intent(context, com.MyService.class);
+    context.startService(intent);
+    }
 
-    }
-    ngOnDestroy(): void {
-        console.log("ngOnDestroy");
-        this.myBeaconDetector.stop();
-    }
+    
 
 }

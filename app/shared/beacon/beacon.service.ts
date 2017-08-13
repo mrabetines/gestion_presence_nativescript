@@ -3,18 +3,22 @@ import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import { Beacon } from "nativescript-ibeacon/nativescript-ibeacon.common";
 import "rxjs/add/operator/map";
-import { getNumber } from "application-settings";
+import { getString } from "application-settings";
 import {Config} from "../../shared/config";
 
 @Injectable()
 export class BeaconService {
     apiUrl = Config.apiUrl;
-
-    constructor(private http: Http) { }
-
+    http:Http;
+    constructor(http:Http) {
+      this.http=http; 
+        }
+   
     getListBeacons() {
         console.log("i am in getListBeacons method ...!!")
-        return this.http.get(this.apiUrl + "beacons")
+        let headers = new Headers();
+        headers.append("Authorization", "Bearer "+getString("token", "none"));
+        return this.http.get(this.apiUrl + "beacons",{headers: headers})
             .map(res => res.json())
             .map(data => {
                 let beaconsList = [];
@@ -25,9 +29,9 @@ export class BeaconService {
             })
             .catch(this.handleErrors);
     }
+    
      handleErrors(error: Response) {
         //console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
-
 }

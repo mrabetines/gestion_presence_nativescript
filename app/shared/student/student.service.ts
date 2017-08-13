@@ -12,13 +12,12 @@ export class StudentService {
  
     login(email: string, pwd: string,token:string) {
         console.log("email: "+email+" pwd: "+pwd+" token: "+token);
-        return this.http.post(this.apiUrl + "student",{'email': email,'pwd': pwd,'token':token})
+        return this.http.post(this.apiUrl + "student",{'email': email,'password': pwd,'token':token})
             .map(response => response.json())
             .catch(this.handleErrors);
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }
