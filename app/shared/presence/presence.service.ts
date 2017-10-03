@@ -13,11 +13,12 @@ export class PresenceService {
     constructor(http:Http) {
       this.http=http; 
         }
-    markPresence(id_Beacon: number,id_Etudiant:number) {
+
+    markPresence(id_Beacon: number,date:string,id_Etudiant:number) {
         let headers = new Headers();
         headers.append("Authorization", "Bearer "+getString("token", "none"));
-        console.log("i am in markPresence method ...!!")
-        return this.http.post(this.apiUrl + "presence", { "id_Etudiant": id_Etudiant, "id_Beacon": id_Beacon },{headers: headers})
+        console.log("i am in markPresence method ...!!");
+        return this.http.post(this.apiUrl + "presence", { "id_Etudiant": id_Etudiant,"date":date, "id_Beacon": id_Beacon },{headers: headers})
             .map(res => res.json())
             .catch(this.handleErrors);
     }

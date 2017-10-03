@@ -90,7 +90,14 @@ export class BeaconDetector extends Observable implements BeaconCallback {
 
     didEnterRegion(region: BeaconRegion) {
         console.log('Did enter Region ' + region.identifier);
-        this.presenceService.markPresence(parseInt(region.identifier),getNumber("id", 0),).subscribe(
+        //récupérer la date 
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth()+1;
+        let yyyy = today.getFullYear(); 
+        let date = yyyy + '-' + mm + '-' + dd;
+
+        this.presenceService.markPresence(parseInt(region.identifier),date,getNumber("id", 0)).subscribe(
             () => { console.log("marked present") },
             (error) => { //alert("error has occured");
                           console.log("ERROR: "); }
